@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java-members" deleted="false" description="after (JUnit 4)" enabled="true" name="after4">@After
+public void ${after}() throws Exception {
+    ${import:import('org.junit.After')}${cursor} 
+}</template><template autoinsert="false" context="java-members" deleted="false" description="afterClass(JUnit 4)" enabled="true" name="afterClass4">@AfterClass
+public static void ${afterClass}() throws Exception {
+    ${import:import('org.junit.AfterClass')}${cursor} 
+}</template><template autoinsert="true" context="java-members" deleted="false" description="before (JUnit 4)" enabled="true" name="before4">@Before
+public void ${before}() throws Exception {
+    ${import:import('org.junit.Before')}${cursor} 
+}</template><template autoinsert="true" context="java-members" deleted="false" description="beforeClass (JUnit 4)" enabled="true" name="beforeClass4">@BeforeClass
+public static void ${beforeClass}() throws Exception {
+    ${import:import('org.junit.BeforeClass')}${cursor} 
+}</template><template autoinsert="false" context="java-members" deleted="false" description="test method (JUnit 4)" enabled="true" id="org.eclipse.jdt.ui.templates.test_junit4" name="test4">@${testType:newType(org.junit.Test)}
+public void ${testName}() throws Exception {
+	${staticImport:importStatic('org.junit.Assert.*')}${cursor}
+}</template></templates>

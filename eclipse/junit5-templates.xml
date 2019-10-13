@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="java-members" deleted="false" description="afterAll(JUnit 5)" enabled="true" name="afterAll5">@AfterAll
+static void ${afterAll}() throws Exception {
+    ${import:import('org.junit.jupiter.api.AfterAll')}${cursor} 
+}</template><template autoinsert="true" context="java-members" deleted="false" description="afterEach (JUnit 5)" enabled="true" name="after5">@AfterEach
+void ${after}() throws Exception {
+    ${import:import('org.junit.jupiter.api.AfterEach')}${cursor} 
+}</template><template autoinsert="true" context="java-members" deleted="false" description="beforeAll (JUnit 5)" enabled="true" name="beforeAll5">@BeforeAll
+static void ${beforeAll}() throws Exception {
+    ${import:import('org.junit.jupiter.api.BeforeAll')}${cursor} 
+}</template><template autoinsert="true" context="java-members" deleted="false" description="beforeEach (JUnit 5)" enabled="true" name="before5">@BeforeEach
+void ${before}() throws Exception {
+    ${import:import('org.junit.jupiter.api.BeforeEach')}${cursor} 
+}</template><template autoinsert="false" context="java-members" deleted="false" description="test method (JUnit 5)" enabled="true" id="org.eclipse.jdt.ui.templates.test_junit5" name="test_jupiter">@${testType:newType(org.junit.jupiter.api.Test)}
+void ${testName}() throws Exception {
+	${staticImport:importStatic('org.junit.jupiter.api.Assertions.*')}${cursor}
+}</template></templates>
