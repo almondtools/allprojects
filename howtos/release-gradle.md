@@ -4,5 +4,5 @@
   * inspect nexus sonatype staging repository (gets visible after login to https://oss.sonatype.org) 
 * `gradlew findSonatypeStagingRepository closeSonatypeStagingRepository`
 * `gradlew findSonatypeStagingRepository releaseSonatypeStagingRepository`
-* Adjust version by readding the -SNAPSHOT-suffix with new version
+* Adjust version by writing the -SNAPSHOT-suffix with new version
 * commit version ("snapshot")
