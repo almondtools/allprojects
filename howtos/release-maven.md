@@ -38,6 +38,8 @@ Configure an old project (OSSRH) to the new way (CENTRAL)
 =========================================================
 
 * `pom.xml` should no longer contain `<distributionManagement>...</distributionManagement>`
+* `pom.xml` should not contain in `<plugins>`
+`nexus-staging-maven-plugin`
 * `pom.xml` should contain in `<plugins>`
 
 ```xml
@@ -50,7 +52,7 @@ Configure an old project (OSSRH) to the new way (CENTRAL)
 <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-gpg-plugin</artifactId>
-	<version>1.6</version>
+	<version>3.1.0</version>
 	<executions>
 		<execution>
 			<id>sign-artifacts</id>
