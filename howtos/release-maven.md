@@ -3,12 +3,14 @@ Release a new version
 
 * ensure the correct java version
   * e.g. `sdk use java 8`
-* execute `maven-release.sh <branch> <version>`
+* make sure that the git project is correctly configured [prepare-git](prepare-git.md)
+* execute `maven-release.sh <branch> <version> <next-snapshot>`
+* sign in into [maven central](https://central.sonatype.com/publishing) and manually publish the version
 
 Configure a maven repo on a fresh system
 ========================================
 
-* `settings.xml` in `.m2` should be of this form
+* `settings.xml` in `~/.m2` should be of this form
 
 ```xml
 <settings>

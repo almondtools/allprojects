@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 BRANCH=$1
 VERSION=$2
@@ -15,37 +15,48 @@ echo "Using branch: $BRANCH"
 echo "Releasing version: $VERSION"
 echo "Next snapshot: $NEXT_SNAPSHOT"
 
-# Extract artifactId from pom.xml
-ARTIFACT_ID=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+# Extract artifactId from gradle properties
+ARTIFACT_ID=$(./gradlew properties -q | grep "^name:" | awk '{print $2}')
 
 if [ -z "$ARTIFACT_ID" ]; then
-  echo "❌ Could not read artifactId from pom.xml"
+  echo "❌ Could not determine artifact id"
   exit 1
 fi
 
 echo "ArtifactId: $ARTIFACT_ID"
 
-echo "Starting dry run (build + tests)..."
+# Ensure clean git state
+if [[ -n $(git status --porcelain) ]]; then
+  echo "❌ Git working tree is not clean"
+  exit 1
+fi
 
-# 1. Dry run
-mvn clean verify
+echo "Running verification build..."
 
-echo "Dry run successful."
+./gradlew clean build
+
+echo "Build successful"
 
 echo "Switching to release version..."
 
-# 2. Set release version
-mvn versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+sed -i.bak "s/^version=.*/version=$VERSION/" gradle.properties
+rm gradle.properties.bak
 
-git add pom.xml
+echo "Verifying release build..."
+
+./gradlew clean build
+
+git add gradle.properties
 git commit -m "Release $VERSION"
 
 TAG="${ARTIFACT_ID}-${VERSION}"
 git tag -a "$TAG" -m "Release $VERSION"
 
-echo "Deploying to Central Portal..."
+echo "Publishing to Maven Central..."
 
-mvn clean deploy -P release -DskipTests
+./gradlew clean publishAggregationToCentralPortal
+
+echo "Published successfully"
 
 echo "Pushing release..."
 
@@ -54,10 +65,10 @@ git push origin "$TAG"
 
 echo "Switching to next SNAPSHOT version..."
 
-# 3. Set next snapshot version
-mvn versions:set -DnewVersion=$NEXT_SNAPSHOT -DgenerateBackupPoms=false
+sed -i.bak "s/^version=.*/version=$NEXT_SNAPSHOT/" gradle.properties
+rm gradle.properties.bak
 
-git add pom.xml
+git add gradle.properties
 git commit -m "Bump version to $NEXT_SNAPSHOT"
 
 echo "Pushing snapshot version..."
